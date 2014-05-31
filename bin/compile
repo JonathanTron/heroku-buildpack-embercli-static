@@ -19,7 +19,7 @@ echo "-----> Found an Ember CLI app"
 if ! (which ember > /dev/null)
 then
     echo "Installing ember-cli..." | indent
-    $npm install -g ember-cli > /dev/null 2>&1
+    npm install -g ember-cli
     echo "done" | indent
 fi
 
