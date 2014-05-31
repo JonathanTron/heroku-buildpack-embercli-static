@@ -7,14 +7,8 @@ build_dir=$1
 cache_dir=$2
 env_dir=$3
 
-nodejs_profile_file=$build_dir/.profile.d/nodejs.sh
-if [ -f $nodejs_profile_file ]; then
-  echo "-----> Sourcing $nodejs_profile_file for nodejs"
-  source $nodejs_profile_file
-else
-  echo "-----> Setting PATH for nodejs"
-  PATH="$build_dir/vendor/node/bin:$build_dir/bin:$build_dir/node_modules/.bin:$PATH"
-fi
+echo "-----> Setting PATH for nodejs"
+PATH="$build_dir/vendor/node/bin:$build_dir/bin:$build_dir/node_modules/.bin:$PATH"
 
 indent() {
   sed -u 's/^/       /'
