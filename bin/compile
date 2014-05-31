@@ -18,17 +18,17 @@ echo "-----> Found an Ember CLI app"
 
 if ! (which ember > /dev/null)
 then
-  echo "Installing ember-cli..." | indent
+  echo "-----> Installing ember-cli..."
   npm install --userconfig $build_dir/.npmrc -g ember-cli 2>&1 | indent
   echo "...done" | indent
 fi
 
 # build app in dist directory
 cd $1
-echo "Building ember-cli app..." | indent
+echo "-----> Building ember-cli app..."
 ember build --environment production | indent
 echo "...done" | indent
 
-ls -l dist/**/* | indent
+ls -l **/* | indent
 
 echo "-----> Ember app build to dist/ directory"
