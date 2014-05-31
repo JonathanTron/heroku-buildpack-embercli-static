@@ -7,11 +7,12 @@ build_dir=$1
 cache_dir=$2
 env_dir=$3
 
-# Configure path for nodejs vendored by heroku-buildpack-nodejs
 if [[ -e $build_dir/.profile.d/nodejs.sh ]]; then
+  echo "-----> Sourcing $build_dir/.profile.d/nodejs.sh for nodejs"
   source $build_dir/.profile.d/nodejs.sh
 else
-  PATH="$HOME/vendor/node/bin:$HOME/bin:$HOME/node_modules/.bin:$PATH"
+  echo "-----> Setting PATH for nodejs"
+  PATH="$build_dir/vendor/node/bin:$build_dir/bin:$build_dir/node_modules/.bin:$PATH"
 fi
 
 indent() {
