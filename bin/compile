@@ -16,16 +16,19 @@ indent() {
 
 echo "-----> Found an Ember CLI app"
 
-# build app in dist directory
-cd $1
-
 if ! (which ember > /dev/null)
 then
-    echo "Installing ember-cli..." | indent
-    npm install ember-cli
-    echo "done" | indent
+  echo "Installing ember-cli..." | indent
+  npm install --userconfig $build_dir/.npmrc -g ember-cli 2>&1 | indent
+  echo "...done" | indent
 fi
 
-ember build --environment production
+# build app in dist directory
+cd $1
+echo "Building ember-cli app..." | indent
+ember build --environment production | indent
+echo "...done" | indent
+
+ls -l dist/**/* | indent
 
 echo "-----> Ember app build to dist/ directory"
