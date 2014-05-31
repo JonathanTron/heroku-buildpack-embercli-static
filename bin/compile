@@ -21,21 +21,16 @@ then
   echo "-----> Installing ember-cli..."
   npm install --userconfig $build_dir/.npmrc ember-cli 2>&1 | indent
   echo "...done" | indent
-fi
 
-# If app has a node_modules directory, cache it.
-if test -d $build_dir/node_modules; then
-  echo "-----> Caching node_modules directory for future builds"
-  cp -r $build_dir/node_modules $cache_dir/node
+  if test -d $build_dir/node_modules; then
+    echo "-----> Caching node_modules directory for future builds"
+    cp -r $build_dir/node_modules $cache_dir/node
+  fi
 fi
-
-cd $build_dir
-pwd | indent
 
 echo "-----> Building ember-cli app..."
+cd $build_dir
 ember build --environment production | indent
 echo "...done" | indent
-
-ls -l
 
 echo "-----> Ember app build to dist/ directory"
