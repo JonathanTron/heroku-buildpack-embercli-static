@@ -23,12 +23,13 @@ then
   echo "...done" | indent
 fi
 
-# build app in dist directory
-cd $1
+cd $build_dir
+pwd | indent
+
 echo "-----> Building ember-cli app..."
 ember build --environment production | indent
 echo "...done" | indent
 
-ls -l **/* | indent
+tree | indent
 
 echo "-----> Ember app build to dist/ directory"
