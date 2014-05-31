@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Found an Ember CLI app"
+
+# build app in dist directory
+cd $1
+ember build --environment production --output-path $1/dist
+
+echo "-----> Ember app build to dist/ directory"

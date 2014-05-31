@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# this pack is valid for apps with a package.json containing "ember build" in the root
+PACKAGE_FILE=$1/package.json
+if [ -f $PACKAGE_FILE ] && grep -q '"ember build"' $PACKAGE_FILE; then
+  echo "Ember CLI app detected"
+  exit 0
+else
+  exit 1
+fi
