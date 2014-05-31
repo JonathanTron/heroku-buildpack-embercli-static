@@ -2,6 +2,10 @@
 
 set -eo pipefail
 
+indent() {
+  sed -u 's/^/       /'
+}
+
 # Configure directories
 build_dir=$1
 cache_dir=$2
@@ -9,10 +13,6 @@ env_dir=$3
 
 echo "-----> Setting PATH for nodejs"
 PATH="$build_dir/vendor/node/bin:$build_dir/bin:$build_dir/node_modules/.bin:$PATH"
-
-indent() {
-  sed -u 's/^/       /'
-}
 
 echo "-----> Found an Ember CLI app"
 
@@ -36,6 +36,6 @@ echo "-----> Building ember-cli app..."
 ember build --environment production | indent
 echo "...done" | indent
 
-ls -l | indent
+ls -l
 
 echo "-----> Ember app build to dist/ directory"
