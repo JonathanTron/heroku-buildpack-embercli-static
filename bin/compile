@@ -8,7 +8,11 @@ cache_dir=$2
 env_dir=$3
 
 # Configure path for nodejs vendored by heroku-buildpack-nodejs
-PATH=$build_dir/vendor/node/bin:$PATH
+if [[ -e $build_dir/.profile.d/nodejs.sh ]]; then
+  source $build_dir/.profile.d/nodejs.sh
+else
+  PATH="$HOME/vendor/node/bin:$HOME/bin:$HOME/node_modules/.bin:$PATH"
+fi
 
 indent() {
   sed -u 's/^/       /'
@@ -19,8 +23,14 @@ echo "-----> Found an Ember CLI app"
 if ! (which ember > /dev/null)
 then
   echo "-----> Installing ember-cli..."
-  npm install --userconfig $build_dir/.npmrc -g ember-cli 2>&1 | indent
+  npm install --userconfig $build_dir/.npmrc ember-cli 2>&1 | indent
   echo "...done" | indent
+fi
+
+# If app has a node_modules directory, cache it.
+if test -d $build_dir/node_modules; then
+  echo "-----> Caching node_modules directory for future builds
+  cp -r $build_dir/node_modules $cache_dir/node
 fi
 
 cd $build_dir
@@ -30,6 +40,6 @@ echo "-----> Building ember-cli app..."
 ember build --environment production | indent
 echo "...done" | indent
 
-tree | indent
+ls -l | indent
 
 echo "-----> Ember app build to dist/ directory"
