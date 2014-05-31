@@ -2,6 +2,14 @@
 
 set -eo pipefail
 
+# Configure directories
+build_dir=$1
+cache_dir=$2
+env_dir=$3
+
+# Configure path for nodejs vendored by heroku-buildpack-nodejs
+PATH=$build_dir/vendor/node/bin:$PATH
+
 indent() {
   sed -u 's/^/       /'
 }
@@ -11,7 +19,7 @@ echo "-----> Found an Ember CLI app"
 if ! (which ember > /dev/null)
 then
     echo "Installing ember-cli..." | indent
-    npm install -g ember-cli > /dev/null 2>&1
+    $npm install -g ember-cli > /dev/null 2>&1
     echo "done" | indent
 fi
 
