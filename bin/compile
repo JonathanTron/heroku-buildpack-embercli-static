@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
+set -eo pipefail
+
 indent() {
   sed -u 's/^/       /'
 }
 
 echo "-----> Found an Ember CLI app"
+
+if ! (which ember > /dev/null)
+then
+    echo "Installing ember-cli..." | indent
+    npm install -g ember-cli > /dev/null 2>&1
+    echo "done" | indent
+fi
 
 # build app in dist directory
 cd $1
