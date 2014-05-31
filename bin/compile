@@ -28,9 +28,18 @@ then
   fi
 fi
 
+if test -d $cache_dir/ember_cli_tmp; then
+  echo "-----> Restoring Ember CLI tmp directory from cache"
+  rm -rf $build_dir/tmp
+  cp -r $cache_dir/ember_cli_tmp $build_dir/tmp
+fi
+
 echo "-----> Building ember-cli app..."
 cd $build_dir
 ember build --environment production | indent
 echo "...done" | indent
+
+echo "-----> Caching Ember CLI tmp directory for future builds"
+cp -r $build_dir/tmp $cache_dir/ember_cli_tmp
 
 echo "-----> Ember app build to dist/ directory"
