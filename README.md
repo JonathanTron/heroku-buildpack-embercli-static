@@ -135,8 +135,8 @@ Commit and push your changes to Heroku.
 It will do the following:
 
 1. Use the `heroku-buildpack-nodejs` to install your `ember-cli` app's dependencies.
-2. Use the `heroku-buildpack-embercli-static` (this buildpack) to fetch you `bower`
-   dependencies and then `ember build` you app to the `dist/` directory.
+2. Use the `heroku-buildpack-embercli-static` (this buildpack) to fetch libs via
+   `bower` and then `ember build` your app to the `dist/` directory.
 3. Use the `nginx-buildpack` to serve your app as static assets.
 
 License
