@@ -14,8 +14,6 @@ env_dir=$3
 echo "-----> Setting PATH for nodejs"
 PATH="$build_dir/vendor/node/bin:$build_dir/bin:$build_dir/node_modules/.bin:$PATH"
 
-echo "-----> Found an Ember CLI app"
-
 if ! (which ember > /dev/null)
 then
   echo "-----> Installing ember-cli..."
@@ -34,12 +32,14 @@ if test -d $cache_dir/ember_cli_tmp; then
   cp -r $cache_dir/ember_cli_tmp $build_dir/tmp
 fi
 
-echo "-----> Building ember-cli app..."
 cd $build_dir
-ember build --environment production | indent
+
+echo "-----> Install bower libraries..."
+bower install | indent
 echo "...done" | indent
 
-echo "-----> Caching Ember CLI tmp directory for future builds"
-cp -r $build_dir/tmp $cache_dir/ember_cli_tmp
+echo "-----> Building ember-cli app..."
+ember build --environment production | indent
+echo "...done" | indent
 
 echo "-----> Ember app build to dist/ directory"
