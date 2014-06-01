@@ -75,9 +75,9 @@ daemon off;
 worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
 
 events {
-	use epoll;
-	accept_mutex on;
-	worker_connections 1024;
+  use epoll;
+  accept_mutex on;
+  worker_connections 1024;
 }
 
 http {
@@ -85,27 +85,27 @@ http {
   gzip_comp_level 2;
   gzip_min_length 512;
 
-	server_tokens off;
+  server_tokens off;
 
-	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
-	access_log logs/nginx/access.log l2met;
-	error_log logs/nginx/error.log;
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+  access_log logs/nginx/access.log l2met;
+  error_log logs/nginx/error.log;
 
-	include mime.types;
-	default_type application/octet-stream;
-	sendfile on;
+  include mime.types;
+  default_type application/octet-stream;
+  sendfile on;
 
-	#Must read the body in 5 seconds.
-	client_body_timeout 5;
+  #Must read the body in 5 seconds.
+  client_body_timeout 5;
 
-	server {
-		listen <%= ENV["PORT"] %>;
-		server_name _;
-		keepalive_timeout 5;
+  server {
+    listen <%= ENV["PORT"] %>;
+    server_name _;
+    keepalive_timeout 5;
 
     root <%= ENV["HOME"] %>/dist;
 
-		location / {
+    location / {
       try_files $uri /index.html;
 
       // uncomment the following lines if you want to force https
@@ -126,7 +126,7 @@ http {
 
       break;
     }
-	}
+  }
 }
 ```
 
